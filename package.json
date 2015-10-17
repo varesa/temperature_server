@@ -1,6 +1,6 @@
 {
-  "name": "mqtt_interface",
-  "version": "0.0.0",
+  "name": "temperature_server",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
