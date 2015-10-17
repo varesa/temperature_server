@@ -1,14 +1,8 @@
 var models = require('./models');
 
-function Datastore() {
-    this.values = {};
-}
+function Datastore() {}
 
 Datastore.prototype.push = function (id, value) {
-    this.values[id] = {
-        value: value,
-        date: new Date()
-    };
     models.Record.create({
         deviceId: id,
         value: value,
@@ -23,7 +17,9 @@ Datastore.prototype.getLatestBySensor = function (id, cb) {
             deviceId: id
         },
         order: 'date DESC'
-    }).then(cb);
+    }).then(cb).catch(function (err) {
+        console.log(err);
+    });
 };
 
 // Record x * latest records for a sensor
@@ -34,7 +30,9 @@ Datastore.prototype.getLimitBySensor = function (id, limit, cb) {
         },
         order: 'date DESC',
         limit: limit
-    }).then(cb);
+    }).then(cb).catch(function (err) {
+        console.log(err);
+    });
 };
 
 // Return x * latest records (not per-sensor)
@@ -42,7 +40,9 @@ Datastore.prototype.getLimitByTotal = function (limit, cb) {
     models.Record.findAll({
         order: 'date DESC',
         limit: limit
-    }).then(cb);
+    }).then(cb).catch(function (err) {
+        console.log(err);
+    });
 };
 
 Datastore.prototype.getAllBySensor = function (id, cb) {
@@ -50,13 +50,17 @@ Datastore.prototype.getAllBySensor = function (id, cb) {
         where: {
             deviceId: id
         }
-    }).then(cb);
+    }).then(cb).catch(function (err) {
+        console.log(err);
+    });
 };
 
 Datastore.prototype.getAll = function(cb) {
     models.Record.findAll({
         order: "date DESC"
-    }).then(cb);
+    }).then(cb).catch(function (err) {
+        console.log(err);
+    });
 };
 
 module.exports = Datastore;

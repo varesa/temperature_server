@@ -19,7 +19,6 @@ function mqtt_listener(datastore) {
             }
         } else {
             datastore.push(topic.substring(1), message.toString());
-            console.log(datastore.getAll());
         }
     })
 }
