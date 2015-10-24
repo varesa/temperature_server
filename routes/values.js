@@ -22,12 +22,15 @@ router.get('/limit/:limit/page/:page', function(req, res) {
     var page = req.params.page;
 
     datastore.countAll(function(totalcount) {
-        var pages = totalcount / limit;
+        var pages = ceil(totalcount / limit);
+        if (page < 0 || page > pages) {
+            res.send({
+                error: "Page not found"
+            });
+        }
         datastore.getPage(limit, page, function(records) {
-            if (page < 0 || page > pages) {
-                res.send({
-                    error: "Page not found"
-                });
+            if (records < limit) {
+                res.setHeader("Cache-Control", "no-cache");
             }
             res.send({
                 links: {
