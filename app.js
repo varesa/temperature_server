@@ -14,6 +14,18 @@ var app = express();
 
 var Datastore = require('./datastore');
 
+
+function exitOnSignal(signal) {
+  process.on(signal, function() {
+    console.log('\ncaught ' + signal + ', exiting');
+    process.exit(1);
+  });
+}
+
+exitOnSignal('SIGINT');
+exitOnSignal('SIGTERM');
+
+
 function app_setup(app) {
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
