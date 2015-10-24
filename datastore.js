@@ -18,6 +18,12 @@ Datastore.prototype.getAll = function(cb) {
     });
 };
 
+Datastore.prototype.countAll = function(cb) {
+    models.Record.count().then(cb).catch(function (err) {
+        console.log(err);
+    });
+};
+
 Datastore.prototype.getPage = function(size, page, cb) {
     var offset = page*size;    
     models.Record.findAll({
