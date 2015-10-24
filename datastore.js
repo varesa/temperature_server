@@ -10,7 +10,7 @@ Datastore.prototype.push = function (id, value) {
     });
 };
 
-// Return the last added record for a sensor
+/*// Return the last added record for a sensor
 Datastore.prototype.getLatestBySensor = function (id, cb) {
     models.Record.findOne({
         where: {
@@ -20,9 +20,9 @@ Datastore.prototype.getLatestBySensor = function (id, cb) {
     }).then(cb).catch(function (err) {
         console.log(err);
     });
-};
+};*/
 
-// Record x * latest records for a sensor
+/*// Record x * latest records for a sensor
 Datastore.prototype.getLimitBySensor = function (id, limit, cb) {
     models.Record.findAll({
         where: {
@@ -33,9 +33,9 @@ Datastore.prototype.getLimitBySensor = function (id, limit, cb) {
     }).then(cb).catch(function (err) {
         console.log(err);
     });
-};
+};*/
 
-// Return x * latest records (not per-sensor)
+/*// Return x * latest records (not per-sensor)
 Datastore.prototype.getLimitByTotal = function (limit, cb) {
     models.Record.findAll({
         order: 'date DESC',
@@ -43,9 +43,9 @@ Datastore.prototype.getLimitByTotal = function (limit, cb) {
     }).then(cb).catch(function (err) {
         console.log(err);
     });
-};
+};*/
 
-Datastore.prototype.getAllBySensor = function (id, cb) {
+/*Datastore.prototype.getAllBySensor = function (id, cb) {
     models.Record.findAll({
         where: {
             deviceId: id
@@ -53,11 +53,22 @@ Datastore.prototype.getAllBySensor = function (id, cb) {
     }).then(cb).catch(function (err) {
         console.log(err);
     });
-};
+};*/
 
 Datastore.prototype.getAll = function(cb) {
     models.Record.findAll({
-        order: "date DESC"
+        order: "date ASC"
+    }).then(cb).catch(function (err) {
+        console.log(err);
+    });
+};
+
+Datastore.prototype.getPage = function(size, page, cb) {
+    var offset = page*size;    
+    models.Record.findAll({
+        order: "date ASC",
+        offset: offset,
+        limit: size        
     }).then(cb).catch(function (err) {
         console.log(err);
     });
