@@ -15,6 +15,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/limit/:limit/page/:page', function(req, res) {
+    console.log("Request received");
     var datastore = req.app.get('datastore');
     res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -22,13 +23,15 @@ router.get('/limit/:limit/page/:page', function(req, res) {
     var page = req.params.page;
 
     datastore.countAll(function(totalcount) {
-        var pages = ceil(totalcount / limit);
-        if (page < 0 || page > pages) {
+        console.log("Counted");
+        var pages = Math.ceil(totalcount / limit);
+        if (page < 0 || page > pages) {
             res.send({
                 error: "Page not found"
             });
         }
         datastore.getPage(limit, page, function(records) {
+            console.log("Page fetched");
             if (records < limit) {
                 res.setHeader("Cache-Control", "no-cache");
             }
@@ -42,6 +45,7 @@ router.get('/limit/:limit/page/:page', function(req, res) {
                 },
                 data: records
             });
+            console.log("Response sent");
         });
     });
 
