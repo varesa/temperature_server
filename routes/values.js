@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 function makeurl(req, suffix) {
-    return req.protocol + "://" + req.get('host') + suffix;
+    return "https://" + req.get('host') + suffix;
 }
 
 router.get('/', function(req, res) {
