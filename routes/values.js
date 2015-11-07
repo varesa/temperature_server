@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 function makeurl(req, suffix) {
-    return "https://" + req.get('host') + suffix;
+    //return "https://" + req.get('host') + suffix;
+    return "https://temperature-cache.esav.fi" + suffix;
 }
 
 router.get('/', function(req, res) {
@@ -34,6 +35,8 @@ router.get('/limit/:limit/page/:page', function(req, res) {
             console.log("Page fetched");
             if (records < limit) {
                 res.setHeader("Cache-Control", "no-cache");
+            } else {
+                res.setHeader("Cache-Control", "max-age=" + 60*60*24*7);
             }
             res.send({
                 links: {
