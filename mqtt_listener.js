@@ -3,7 +3,7 @@ var mqtt = require('mqtt');
 var models = require('./models');
 
 function mqtt_listener(datastore) {
-    var client = mqtt.connect('mqtt://172.17.0.3');
+    var client = mqtt.connect('mqtt://rabbitmq-sysd.containers.ikioma');
 
     var ids = [];
 
