@@ -16,11 +16,11 @@ function mqtt_listener(datastore) {
         if(topic === "/devices") {
             if (ids.indexOf(message.toString() > -1)) {
                 ids.push(message.toString());
-                client.subscribe('/' + message.toString())
+                client.subscribe('/' + message.toString());
                 console.log("Subscribing to /" + message.toString());
             }
         } else {
-            datastore.push(topic.substring(1), message.toString());
+            datastore.newValue(topic.substring(1), message.toString());
         }
     })
 }

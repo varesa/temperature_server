@@ -1,8 +1,27 @@
 var models = require('./models');
 
-function Datastore() {}
+var INTERVAL = 5* 60 * 1000;
 
-Datastore.prototype.push = function (id, value) {
+function Datastore() {
+    this.insertionDates = {}
+}
+
+Datastore.prototype.newValue = function(id, value) {
+    var now = Date.now();
+    if (Object.keys(this.insertionDates).indexOf(id) === -1) {
+        this.insertionDates[id] = now;
+    } else {
+        if(now - this.insertionDates[id] < INTERVAL) {
+            console.log("Not storing: " + id);
+            return false;
+        }
+    }
+    console.log("Storing: " + id);
+    this.insertionDates[id] = now;
+    this.store(id, value);
+};
+
+Datastore.prototype.store = function (id, value) {
     models.Record.create({
         deviceId: id,
         value: value,
