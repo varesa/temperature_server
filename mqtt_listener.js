@@ -8,6 +8,7 @@ function mqtt_listener(datastore) {
     var ids = [];
 
     client.on('connect', function() {
+        console.log("MQTT Connected");
        client.subscribe('/devices');
     });
 
@@ -16,6 +17,7 @@ function mqtt_listener(datastore) {
             if (ids.indexOf(message.toString() > -1)) {
                 ids.push(message.toString());
                 client.subscribe('/' + message.toString())
+                console.log("Subscribing to /" + message.toString());
             }
         } else {
             datastore.push(topic.substring(1), message.toString());
