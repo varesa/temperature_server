@@ -43,8 +43,8 @@ router.get('/limit/:limit/page/:page', function(req, res) {
                     first: makeurl(req, "/values/limit/" + limit + "/page/0"),
                     prev: (page == 0) ? null : makeurl(req, "/values/limit/" + limit + "/page/" + (parseInt(page)-1)),
                     self: makeurl(req, "/values/limit/" + limit + "/page/" + page),
-                    next: (page == pages) ? null : makeurl(req, "/values/limit/" + limit + "/page/" + (parseInt(page)+1)),
-                    last: makeurl(req, "/values/limit/" + limit + "/page/" + pages)
+                    next: (page == pages-1) ? null : makeurl(req, "/values/limit/" + limit + "/page/" + (parseInt(page)+1)),
+                    last: makeurl(req, "/values/limit/" + limit + "/page/" + (pages-1))
                 },
                 data: records
             });
