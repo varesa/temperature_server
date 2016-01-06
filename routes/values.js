@@ -33,7 +33,7 @@ router.get('/limit/:limit/page/:page', function(req, res) {
         }
         datastore.getPage(limit, page, function(records) {
             console.log("Page fetched");
-            if (records < limit) {
+            if (records.length < limit) {
                 res.setHeader("Cache-Control", "no-cache");
             } else {
                 res.setHeader("Cache-Control", "max-age=" + 60*60*24*7);
